@@ -11,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -25,26 +29,48 @@ public class Customer implements Serializable {
     @GeneratedValue()
 	private Long id;
 	
+	@NotNull
+	@Size(min=12, max=12)
+	 @Pattern(regexp="[0-9]+")
 	@Column(name = "aadhar")
     private String aadhar; 
 	
+	@NotNull
+    @Pattern(regexp="[A-Za-z]+")
     @Column(name = "gender")
 		private String gender;
-    
-    @Column(name = "panCard")	                             
-		private String panCard;
-    
-    @Column(name = "contactNumber")
-		private String contactNumber;
-    
-    @Column(name = "dob")
-		private String dob;
 	
-    
+	@NotNull
+	@Size(min = 9, max = 9)
+	 @Pattern(regexp="[A-Z]{4}[0-9]{4}[A-Z]")
+    @Column(name = "panCard")	                             
+	private String panCard;
+	
+	
+	
+	
+	@NotNull
+	@Pattern(regexp="[0-9]{10}")
+    @Column(name = "contactNumber")
+	private String contactNumber;
+	
+	@NotNull
+	@Pattern(regexp="[0-9]{2}\\-[0-9]{2}\\-[0-9]{4}")
+    @Column(name = "dob")
+	private String dob;
+
+	
+	
+	@NotNull
+    @Size(min = 3, max = 50)
+	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "name")
 	private String name;
     
-    @Column(name = "age")
+	@NotNull
+	@Min(15)
+	
+	@Column(name = "age")
 	private int age;
     
     @OneToOne(fetch = FetchType.LAZY,
@@ -123,11 +149,11 @@ public class Customer implements Serializable {
 		this.age = age;
 	}
 
-	public Address getContact() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setContact(Address address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 

@@ -11,7 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -22,31 +27,44 @@ public class Address implements Serializable{
 
 	@Id
     @GeneratedValue()
-	private Long id;
 
+	private Long id;
+	
+    @NotNull
+    @Size(min = 3, max = 20)
+	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "city")
     private String city;
     
-    @Column(name = "phone")
-    private String phone;
-    
+   
+    @NotNull
+    @Size(min = 3, max = 60)
+	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "addressLine1")
     private String addressLine1;
 	
+    @NotNull
+    @Size(min = 3, max = 60)
+    @Pattern(regexp="[A-Za-z]+")
     @Column(name = "addressLine2")
 	private String addressLine2;
 	
-	
+    @NotNull
+    @Size(min = 3, max = 20)
+    @Pattern(regexp="[A-Za-z]+")
     @Column(name = "country")
-	private String country; 
-	
+	private String country;
+    
+    @NotNull
+    @Pattern(regexp="[0-9]{6}")
     @Column(name = "zipCode")
 	private String zipCode;
 	
     
     
     @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "address_id", nullable = false)
+    @JsonBackReference
     private Customer customer;
 
 
@@ -75,15 +93,9 @@ public class Address implements Serializable{
 
 
 
-	public String getPhone() {
-		return phone;
-	}
+	
 
 
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 
 
 
@@ -135,13 +147,13 @@ public class Address implements Serializable{
 
 
 
-	public Customer getStudent() {
+	public Customer getCustomer() {
 		return customer;
 	}
 
 
 
-	public void setStudent(Customer customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
@@ -153,12 +165,12 @@ public class Address implements Serializable{
 
 
 
-	public Address(Long id, String city, String phone, String addressLine1, String addressLine2, String country,
+	public Address(Long id, String city, String addressLine1, String addressLine2, String country,
 			String zipCode, Customer customer) {
 		super();
 		this.id = id;
 		this.city = city;
-		this.phone = phone;
+		
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.country = country;

@@ -17,7 +17,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -28,23 +33,35 @@ public class Account implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @GeneratedValue()
+    @GeneratedValue() 
 	private Long id;
-
-	 @Column(name = "accountNumber")
+	
+    @NotNull
+    @Size(min = 12, max = 12)
+    @Pattern(regexp="[0-9]{12}")
+	@Column(name = "accountNumber")
 	private String accountNumber; 
 	 
-	 @Column(name = "accountType")
+
+    @NotNull
+    @Pattern(regexp="[A-Za-z]+")
+	@Column(name = "accountType")
 	private String accountType;
+    
 	 
-	 @Column(name = "balance")
+	@Column(name = "balance")
 	private Double balance;  
 	 
+	 
+	 @NotNull
+	 @Size(min = 9, max = 9)
+	 @Pattern(regexp="[A-Z]{3}[0-9]{6}")
 	 @Column(name = "branchId")
 	private String branchId;
 	 
 	 @OneToOne(fetch = FetchType.LAZY, optional = false)
-	 @JoinColumn(name = "customer_id", nullable = false)
+	 @JoinColumn(name = "account_id", nullable = false)
+	 @JsonBackReference
 	 private Customer customer;
 
 	public Long getId() {
