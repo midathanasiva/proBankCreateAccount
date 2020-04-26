@@ -36,27 +36,31 @@ public class Account implements Serializable{
     @GeneratedValue() 
 	private Long id;
 	
-    @NotNull
+    
     @Size(min = 12, max = 12)
     @Pattern(regexp="[0-9]{12}")
 	@Column(name = "accountNumber")
+    @NotNull(message="Account_Number is Mandatory that too 12 digits")
 	private String accountNumber; 
 	 
 
-    @NotNull
+    
     @Pattern(regexp="[A-Za-z]+")
 	@Column(name = "accountType")
+    @NotNull(message="accountType is Mandatory")
 	private String accountType;
     
 	 
 	@Column(name = "balance")
+	
 	private Double balance;  
 	 
 	 
-	 @NotNull
+	 
 	 @Size(min = 9, max = 9)
 	 @Pattern(regexp="[A-Z]{3}[0-9]{6}")
 	 @Column(name = "branchId")
+	 @NotNull(message="BranchId is Mandatory")
 	private String branchId;
 	 
 	 @OneToOne(fetch = FetchType.LAZY, optional = false)

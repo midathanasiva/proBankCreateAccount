@@ -29,50 +29,51 @@ public class Customer implements Serializable {
     @GeneratedValue()
 	private Long id;
 	
-	@NotNull
+
 	@Size(min=12, max=12)
 	 @Pattern(regexp="[0-9]+")
+	@NotNull(message="Aadhar should be mandatery and size should be 12 numbers")
 	@Column(name = "aadhar")
+	
     private String aadhar; 
 	
 	@NotNull
     @Pattern(regexp="[A-Za-z]+")
+	@NotNull(message=" Gender Should be  Mandatory")
     @Column(name = "gender")
 		private String gender;
 	
 	@NotNull
 	@Size(min = 9, max = 9)
 	 @Pattern(regexp="[A-Z]{4}[0-9]{4}[A-Z]")
-    @Column(name = "panCard")	                             
+    @Column(name = "panCard")	
+	@NotNull(message="PanCard should be mandatery that too First 4 caps then 4 numbers then 1 caps")
 	private String panCard;
 	
 	
 	
 	
-	@NotNull
+	
 	@Pattern(regexp="[0-9]{10}")
     @Column(name = "contactNumber")
+	@NotNull(message="contactNumber  is Mandatory that too 10 numbers")
 	private String contactNumber;
 	
-	@NotNull
+	
 	@Pattern(regexp="[0-9]{2}\\-[0-9]{2}\\-[0-9]{4}")
+	@NotNull(message="DateOfBirth Mandatery")
     @Column(name = "dob")
 	private String dob;
 
 	
 	
-	@NotNull
+	
     @Size(min = 3, max = 50)
 	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "name")
+    @NotNull(message=" Name is Mandatory")
 	private String name;
-    
-	@NotNull
-	@Min(15)
-	
-	@Column(name = "age")
-	private int age;
-    
+      
     @OneToOne(fetch = FetchType.LAZY,
             cascade =  CascadeType.ALL,
             mappedBy = "customer")
@@ -141,14 +142,9 @@ public class Customer implements Serializable {
 		this.name = name;
 	}
 
-	public int getAge() {
-		return age;
-	}
+	
 
-	public void setAge(int age) {
-		this.age = age;
-	}
-
+	
 	public Address getAddress() {
 		return address;
 	}
@@ -170,7 +166,7 @@ public class Customer implements Serializable {
 	}
 
 	public Customer(Long id, String aadhar, String gender, String panCard, String contactNumber, String dob, String name,
-			int age, Address address, Account account) {
+			 Address address, Account account) {
 		super();
 		this.id = id;
 		this.aadhar = aadhar;
@@ -179,7 +175,7 @@ public class Customer implements Serializable {
 		this.contactNumber = contactNumber;
 		this.dob = dob;
 		this.name = name;
-		this.age = age;
+		
 		this.address = address;
 		this.account = account;
 	}

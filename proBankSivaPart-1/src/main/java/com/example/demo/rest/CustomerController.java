@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exception.BankException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.jpa.AccountRepository;
 import com.example.demo.jpa.AddressRepository;
@@ -25,7 +26,7 @@ import com.example.demo.model.Customer;
 
 
 @RestController
-//@RequestMapping("c")
+
 public class CustomerController {
 	
 	@Autowired
@@ -37,12 +38,12 @@ public class CustomerController {
 	
 	
     @GetMapping("/customers")
-    public List<Customer> getAllcustomers() {
+    public List<Customer> getAllcustomers() throws BankException{
     	return customerRepository.findAll();
     }
     
     @GetMapping("/customers/{id}")
-    public Customer getcustomerByID(@PathVariable Long id) {
+    public Customer getcustomerByID(@PathVariable Long id) throws BankException {
     	Optional<Customer> optcustomer = customerRepository.findById(id);
     	if(optcustomer.isPresent()) {
     		return optcustomer.get();
@@ -52,7 +53,7 @@ public class CustomerController {
     }
     
     @PostMapping("/customers")
-    public Customer createcustomer(@Valid @RequestBody Customer customer) {
+    public Customer createcustomer(@Valid @RequestBody Customer customer) throws BankException {
         return customerRepository.save(customer);
     }
     
@@ -62,7 +63,7 @@ public class CustomerController {
         return customerRepository.findById(id)
                 .map(customer -> {
                     customer.setName(customerUpdated.getName());
-                    customer.setAge(customerUpdated.getAge());
+                   
                     
                     customer.setAadhar(customerUpdated.getAadhar());
                     customer.setGender(customerUpdated.getGender());
@@ -84,7 +85,7 @@ public class CustomerController {
     }
     
     @GetMapping("/accounts")
-	public List<Account> getAllaccounts(){
+	public List<Account> getAllaccounts() throws BankException{
 		return accountRepository.findAll();
 	}
 	
@@ -99,7 +100,7 @@ public class CustomerController {
     	if(accounts.size() > 0) {
     		return accounts.get(0);
     	}else {
-    		throw new NotFoundException("Account not found!");
+    		throw new NotFoundException("Account not found sivaaa!");
     	}
     }
     
@@ -143,13 +144,13 @@ public class CustomerController {
     
 
 	  @PostMapping("/addresses")
-	    public Address createaddress(@Valid @RequestBody Address address) {
+	    public Address createaddress(@Valid @RequestBody Address address)  throws BankException{
 	        return addressRepository.save(address);
 	  }
 	
 	
 	@GetMapping("/addresses")
-	public List<Address> getAlladdresses(){
+	public List<Address> getAlladdresses() throws BankException{
 		return addressRepository.findAll();
 	}
 	

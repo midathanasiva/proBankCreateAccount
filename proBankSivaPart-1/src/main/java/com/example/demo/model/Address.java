@@ -30,33 +30,38 @@ public class Address implements Serializable{
 
 	private Long id;
 	
-    @NotNull
+    
     @Size(min = 3, max = 20)
 	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "city")
+    @NotNull(message="city is Mandatory")
     private String city;
     
    
-    @NotNull
+   
     @Size(min = 3, max = 60)
 	@Pattern(regexp="[A-Za-z]+")
     @Column(name = "addressLine1")
+    @NotNull(message="Address is  is Mandatory")
     private String addressLine1;
 	
-    @NotNull
+    
     @Size(min = 3, max = 60)
     @Pattern(regexp="[A-Za-z]+")
     @Column(name = "addressLine2")
+    @NotNull(message="Address 2  is Mandatory")
 	private String addressLine2;
 	
-    @NotNull
+   
     @Size(min = 3, max = 20)
+    @NotNull(message="country is Mandatory")
     @Pattern(regexp="[A-Za-z]+")
     @Column(name = "country")
 	private String country;
     
-    @NotNull
+   
     @Pattern(regexp="[0-9]{6}")
+    @NotNull(message="zipcode is Mandatory that too 6 digits Ex:531115")
     @Column(name = "zipCode")
 	private String zipCode;
 	
