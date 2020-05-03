@@ -1,0 +1,108 @@
+<div class="container">
+  <div id="div1">
+    <h3>AddressDetails</h3>
+  </div>
+  <div style="text-align: center" class="alert alert-danger" *ngIf="message">
+    <h4>{{message}}</h4>
+     <!-- it is to display the responce message which comes from database
+    it displays the user to guide him/her -->
+</div>
+<form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+      
+  <div class="form-group">
+    <label>EnterUniqueTokenId:</label>
+    <input type="id" #id="ngModel" required pattern="[0-9]*" class="form-control" [class.is-invalid]="id.invalid && id.touched" name="id" [(ngModel)]="IdUrl">
+    <!-- <small class="text-danger" [class.d-none]="id.valid || id.untouched">Aadhar number must be 12 digits</small> -->
+    <div *ngIf="id.errors && (id.invalid || id.touched)">
+      <small class="text-danger" *ngIf="id.errors.required">id number is required</small>      
+      <small class="text-danger" *ngIf="id.errors.pattern">no alphabits allowed, only numbers</small>      
+    </div>
+  </div>
+     <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+
+
+
+
+    <div class="form-group">
+      <label>CityName:</label>
+      <input type="text" #city="ngModel" required class="form-control" [class.is-invalid]="city.invalid && city.touched" name="city" [(ngModel)]="userModel1.city" pattern="[a-zA-Z]*">
+    
+      <div *ngIf="city.errors && (city.invalid || city.touched)">
+        <small class="text-danger" *ngIf="city.errors.required">city is required</small>      
+        <small class="text-danger" *ngIf="city.errors.pattern">city does not contain Numbers, Only Alphabits allowed</small>      
+      </div>
+    </div>
+       <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+    <div class="form-group">
+        <label>AddressLine1:</label>
+        <input type="text" #addressLine1="ngModel" required class="form-control" [class.is-invalid]="addressLine1.invalid && addressLine1.touched" name="addressLine1" [(ngModel)]="userModel1.addressLine1" pattern="[a-zA-Z ]*">
+      
+        <div *ngIf="addressLine1.errors && (addressLine1.invalid || addressLine1.touched)">
+          <small class="text-danger" *ngIf="addressLine1.errors.required">addressLine1 is required</small>      
+          <small class="text-danger" *ngIf="addressLine1.errors.pattern">addressLine1 does not contain Numbers, Only Alphabits  and "space special characters" allowed</small>      
+        </div>
+      </div>
+         <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+      <div class="form-group">
+        <label>AddressLine2:</label>
+        <input type="text" #addressLine2="ngModel" required class="form-control" [class.is-invalid]="addressLine2.invalid && addressLine2.touched" name="addressLine2" [(ngModel)]="userModel1.addressLine2" pattern="[a-zA-Z ]*">
+      
+        <div *ngIf="addressLine2.errors && (addressLine2.invalid || addressLine2.touched)">
+          <small class="text-danger" *ngIf="addressLine2.errors.required">addressLine2 is required</small>      
+          <small class="text-danger" *ngIf="addressLine2.errors.pattern">addressLine2 does not contain Numbers, Only Alphabits and Special Space Characters allowed</small>      
+        </div>
+      </div>
+         <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+
+      <div class="form-group">
+        <label>Country:</label>
+        <input type="text" #country="ngModel" required class="form-control" [class.is-invalid]="country.invalid && country.touched" name="country" [(ngModel)]="userModel1.country" pattern="[a-zA-Z]*">
+      
+        <div *ngIf="country.errors && (country.invalid || country.touched)">
+          <small class="text-danger" *ngIf="country.errors.required">country is required</small>      
+          <small class="text-danger" *ngIf="country.errors.pattern">country does not contain Numbers, Only Alphabits allowed</small>      
+        </div>
+      </div>
+         <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+
+      <div class="form-group">
+        <label>zipCode:</label>
+        <input type="text" #zipCode="ngModel" required class="form-control" [class.is-invalid]="zipCode.invalid && zipCode.touched" name="zipCode" [(ngModel)]="userModel1.zipCode" pattern="[0-9]{6}">
+      
+        <div *ngIf="zipCode.errors && (zipCode.invalid || zipCode.touched)">
+          <small class="text-danger" *ngIf="zipCode.errors.required">zipCode is required</small>      
+          <small class="text-danger" *ngIf="zipCode.errors.pattern">zipCode allows Only Alphabits and the length is 6</small>      
+        </div>
+      </div>
+         <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+      <button class="btn btn-primary" [disabled]="userForm.form.invalid" type="submit">Submit form</button>
+</form>
+<div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+     <!-- if there is any error from database , it will display over here. -->
+   
+  </div>
+</div>

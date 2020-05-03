@@ -1,0 +1,92 @@
+
+<div class="container">
+  <div id="div1">
+    <h3>AccountDetails</h3>
+  </div>
+  <div style="text-align: center" class="alert alert-danger" *ngIf="message">
+    <h4>{{message}}</h4>
+    <!-- it is to display the responce message which comes from database
+    it displays the user to guide him/her -->
+</div>
+   
+    
+    <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+      
+      <div class="form-group">
+        <label>EnterUniqueTokenId:</label>
+        <input type="id" #id="ngModel" required pattern="[0-9]*" class="form-control" [class.is-invalid]="id.invalid && id.touched" name="id" [(ngModel)]="IdUrl">
+        <!-- <small class="text-danger" [class.d-none]="id.valid || id.untouched">Aadhar number must be 12 digits</small> -->
+        <div *ngIf="id.errors && (id.invalid || id.touched)">
+          <small class="text-danger" *ngIf="id.errors.required">id number is required</small>      
+          <small class="text-danger" *ngIf="id.errors.pattern">no alphabits allowed, only numbers</small>      
+        </div>
+        <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+      </div>
+
+      <div class="form-group">
+        <label>AccountNumber:</label>
+        <input type="text" #accountNumber="ngModel" required class="form-control" [class.is-invalid]="accountNumber.invalid && accountNumber.touched" name="accountNumber" [(ngModel)]="userModel2.accountNumber" pattern="[0-9]{12}">
+      
+        <div *ngIf="accountNumber.errors && (accountNumber.invalid || accountNumber.touched)">
+          <small class="text-danger" *ngIf="accountNumber.errors.required">accountNumber is required</small>      
+          <small class="text-danger" *ngIf="accountNumber.errors.pattern">accountNumber does not contain Alphabits, Only numbers allowed, should be 12</small>      
+        </div>
+      </div>
+       <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+
+      <div class="form-group">
+        <label>AccountType:</label>
+        <select class="custom-select" (blur)="validateTopic(accountType.value)" (change)="validateTopic(accountType.value)" #accountType="ngModel" [class.is-invalid]="topicHasError && accountType.touched" name="accountType" [(ngModel)]="userModel2.accountType">
+         
+          <option value="default">accountType</option>
+          <option *ngFor="let topic of types">{{ topic }}</option>
+        </select>
+        <small class="text-danger" [class.d-none]="!topicHasError || accountType.untouched">select accountType</small>      
+      </div>
+      <!-- here it will display drop-down menu to user ,
+       he/she need to select one from that
+      ahd then it checks for error and more ever it
+       checks whether user has touched or not -->
+      
+
+      <div class="form-group">
+        <label>BranchId:</label>
+        <select class="custom-select" (blur)="validateTopic(branchId.value)" (change)="validateTopic(branchId.value)" #branchId="ngModel" [class.is-invalid]="topicHasError && branchId.touched" name="branchId" [(ngModel)]="userModel2.branchId">
+         
+          <option value="default">branchId</option>
+          <option *ngFor="let topic of types1">{{ topic }}</option>
+        </select>
+        <small class="text-danger" [class.d-none]="!topicHasError || branchId.untouched">select branchId</small>      
+      </div>
+
+      <div class="form-group">
+        <label>Balance:</label>
+        <input type="number" #balance="ngModel" required class="form-control" [class.is-invalid]="balance.invalid && balance.touched" name="balance" [(ngModel)]="userModel2.balance" pattern="[0-9]*">
+      
+        <div *ngIf="balance.errors && (balance.invalid || balance.touched)">
+          <small class="text-danger" *ngIf="balance.errors.required">balance is required</small>      
+          <small class="text-danger" *ngIf="balance.errors.pattern">balance does not contain Alphabits, Only numbers allowed balance should not be less than "0"</small>      
+        </div>
+      </div>
+       <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+
+      <button class="btn btn-primary" [disabled]="userForm.form.invalid || topicHasError" type="submit">Submit form</button>
+
+    </form>
+    <div class="alert alert-danger" *ngIf="errorMsg">
+        {{errorMsg}}
+       
+        <!-- if there is any error from database , it will display over here. -->
+      </div>
+    </div>
+  

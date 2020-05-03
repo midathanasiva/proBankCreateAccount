@@ -1,0 +1,108 @@
+<div class="container-fluid">
+   <div id="div1">
+     <h3>CustomerDetails</h3>
+   </div>
+   <div style="text-align: center" class="alert alert-danger" *ngIf="message">
+    <h4>{{message}}</h4>
+     <!-- it is to display the responce message which comes from database
+    it displays the user to guide him/her -->
+</div>
+
+    <form #userForm="ngForm" *ngIf="!submitted" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" #name="ngModel" required class="form-control" [class.is-invalid]="name.invalid && name.touched" name="name" [(ngModel)]="userModel.name" pattern="[a-zA-Z ]*">
+      
+        <div *ngIf="name.errors && (name.invalid || name.touched)">
+          <small class="text-danger" *ngIf="name.errors.required">Name is required</small>      
+          <small class="text-danger" *ngIf="name.errors.pattern">Name does not contain Numbers, Only Alphabits allowed</small>      
+        </div>
+      </div>
+      <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+  
+   
+  
+      <div class="form-group">
+        <label>ContactNumber:</label>
+        <input type="tel" #contactNumber="ngModel" required pattern="^((\\+91-?)|0)?[6-9][0-9]{9}$" class="form-control" [class.is-invalid]="contactNumber.invalid && contactNumber.touched" name="contactNumber" [(ngModel)]="userModel.contactNumber">
+        
+        <div *ngIf="contactNumber.errors && (contactNumber.invalid || contactNumber.touched)">
+          <small class="text-danger" *ngIf="contactNumber.errors.required">contactNumber number is required</small>      
+          <small class="text-danger" *ngIf="contactNumber.errors.pattern">contactNumber number must be 10 digits and starts with 6 or 7 or 8 or 9</small>      
+        </div>
+      </div>
+      <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+  
+      <div class="form-group">
+        <label>Aadhar:</label>
+        <input type="aadhar" #aadhar="ngModel" required pattern="[0-9]{12}" class="form-control" [class.is-invalid]="aadhar.invalid && aadhar.touched" name="aadhar" [(ngModel)]="userModel.aadhar">
+      
+        <div *ngIf="aadhar.errors && (aadhar.invalid || aadhar.touched)">
+          <small class="text-danger" *ngIf="aadhar.errors.required">aadhar number is required</small>      
+          <small class="text-danger" *ngIf="aadhar.errors.pattern">aadhar number must be  only 12 digits no alphabits</small>      
+        </div>
+      </div>
+      <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+  
+  
+      <div class="form-group">
+        <label>PanCardNumber:</label>
+        <input type="panCard" #panCard="ngModel" required pattern="[A-Z]{4}[0-9]{4}[A-Z]" class="form-control" [class.is-invalid]="panCard.invalid && panCard.touched" name="panCard" [(ngModel)]="userModel.panCard">
+        <!-- <small class="text-danger" [class.d-none]="panCard.valid || panCard.untouched">Aadhar number must be 12 digits</small> -->
+        <div *ngIf="panCard.errors && (panCard.invalid || panCard.touched)">
+          <small class="text-danger" *ngIf="panCard.errors.required">panCard number is required</small>      
+          <small class="text-danger" *ngIf="panCard.errors.pattern">panCard number must be  in the format: "QWER1234A" and that too 9 characters</small>      
+        </div>
+      </div>
+      <!-- these are tempelate validations here if there is error in pattern 
+        it display error.pattern line(checks for pattern)
+        another one is to checks whether user entered any thing or not
+        this is tempelate binding validations -->
+  
+      <div class="form-group">
+      <label >Date-Of-Birth:</label>
+      <input type="date" #date="ngModel" required class="form-control" [class.is-invalid]="date.invalid && date.touched" name="date" [(ngModel)]="userModel.dob">
+        <!-- <small class="text-danger" [class.d-none]="panCard.valid || panCard.untouched">Aadhar number must be 12 digits</small> -->
+        <div *ngIf="date.errors && (date.invalid || date.touched)">
+          <small class="text-danger" *ngIf="date.errors.required">Date-Of-Birth is required</small>     
+        </div>
+        <!-- here i used in built date attribute(HTML) , it will display date structure 
+        and user need to select his date of Date-Of-Birthfron that  -->
+      </div>
+  
+      <div class="form-group">
+        <label>Your Gender:</label>
+        <select class="custom-select" (blur)="validateTopic(gender.value)" (change)="validateTopic(gender.value)" #gender="ngModel" [class.is-invalid]="topicHasError && gender.touched" name="gender" [(ngModel)]="userModel.gender">
+         
+          <option value="default">Gender</option>
+          <option *ngFor="let topic of topics">{{ topic }}</option>
+        </select>
+        <small class="text-danger" [class.d-none]="!topicHasError || gender.untouched">select gender</small>      
+      </div>
+       <!-- here it will display drop-down menu to user ,
+       he/she need to select one from that
+      ahd then it checks for error and more ever it
+       checks whether user has touched or not -->
+  
+  
+      <button class="btn btn-primary" [disabled]="userForm.form.invalid || topicHasError" type="submit">Submit form</button>
+  
+    </form>
+    
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{errorMsg}}
+       <!-- if there is any error from database , it will display over here. -->
+     
+    </div>
+  </div>
+  
+
